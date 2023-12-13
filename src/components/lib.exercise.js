@@ -1,16 +1,33 @@
 import styled from '@emotion/styled/macro'
+import { keyframes } from '@emotion/core'
 import {Dialog as ReachDialog} from '@reach/dialog'
+import * as colors from 'styles/colors'
 import * as mq from 'styles/media-queries'
-import * as c from 'styles/colors'
+import {FaSpinner} from 'react-icons/fa'
+
+const spin = keyframes`
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(1turn);
+  }
+`
+
+
+export const Spinner = styled(FaSpinner)({
+  animation: `${spin} 1s linear infinite`
+})
 
 const buttonVariants = {
   primary: {
-    background: c.indigo,
-    color: c.base,
+    background: colors.indigo,
+    color: colors.base,
   },
   secondary: {
-    background: c.gray,
-    color: c.text,
+    background: colors.gray,
+    color: colors.text,
   },
 }
 const Button = styled.button(
@@ -25,8 +42,8 @@ const Button = styled.button(
 
 const Input = styled.input({
   borderRadius: '3px',
-  border: `1px solid ${c.gray10}`,
-  background: c.gray,
+  border: `1px solid ${colors.gray10}`,
+  background: colors.gray,
   padding: '8px 12px',
 })
 
@@ -39,9 +56,9 @@ const CircleButton = styled.button({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: 'white',
-  color: c.text,
-  border: `1px solid ${c.gray10}`,
+  background: colors.base,
+  color: colors.text,
+  border: `1px solid ${colors.gray10}`,
   cursor: 'pointer',
 })
 
@@ -54,11 +71,7 @@ const Dialog = styled(ReachDialog)({
   [mq.small]: {
     width: '100%',
     margin: '10vh auto',
-  }
-  // '@media (max-width: 991px)': {
-    // width: '100%',
-    // margin: '10vh auto',
-  // },
+  },
 })
 
 const FormGroup = styled.div({
