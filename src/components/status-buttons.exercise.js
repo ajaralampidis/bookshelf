@@ -21,10 +21,12 @@ import {useAsync} from 'utils/hooks'
 import {CircleButton, Spinner} from './lib'
 
 function TooltipButton({label, highlight, onClick, icon, ...rest}) {
-  const {isLoading, isError, error, run} = useAsync()
+  const {isLoading, isError, error, run, reset} = useAsync()
 
   function handleClick() {
-    run(onClick())
+    console.log("HANDLE CLICK: ",isError)
+    if(isError) { reset() }
+    if(!isError) { run(onClick()) }
   }
 
   return (
@@ -54,9 +56,9 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
 function StatusButtons({user, book}) {
   const listItem = useListItem(user, book.id)
 
-  const [update] = useUpdateListItem(user)
-  const [remove] = useRemoveListItem(user)
-  const [create] = useCreateListItem(user)
+  const [update] = useUpdateListItem(user, {throwOnError: true})
+  const [remove] = useRemoveListItem(user, {throwOnError: true})
+  const [create] = useCreateListItem(user, {throwOnError: true})
 
   return (
     <React.Fragment>
