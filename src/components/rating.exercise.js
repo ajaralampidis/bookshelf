@@ -2,8 +2,6 @@
 import {jsx} from '@emotion/core'
 
 import * as React from 'react'
-// import {useMutation, queryCache} from 'react-query'
-// import {client} from 'utils/api-client'
 import {useUpdateListItem} from 'utils/list-items'
 import {FaStar} from 'react-icons/fa'
 import * as colors from 'styles/colors'
@@ -21,7 +19,7 @@ const visuallyHiddenCSS = {
 
 function Rating({listItem, user}) {
   const [isTabbing, setIsTabbing] = React.useState(false)
-  const [mutate] = useUpdateListItem(user)
+  const [update] = useUpdateListItem(user)
 
   React.useEffect(() => {
     function handleKeyDown(event) {
@@ -47,7 +45,7 @@ function Rating({listItem, user}) {
           value={ratingValue}
           checked={ratingValue === listItem.rating}
           onChange={() => {
-            mutate({id: listItem.id, rating: ratingValue})
+            update({id: listItem.id, rating: ratingValue})
           }}
           css={[
             visuallyHiddenCSS,
