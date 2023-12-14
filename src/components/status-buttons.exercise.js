@@ -24,9 +24,11 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
   const {isLoading, isError, error, run, reset} = useAsync()
 
   function handleClick() {
-    console.log("HANDLE CLICK: ",isError)
-    if(isError) { reset() }
-    if(!isError) { run(onClick()) }
+    if (isError) {
+      reset()
+    } else {
+      run(onClick())
+    }
   }
 
   return (
