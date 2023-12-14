@@ -11,7 +11,7 @@ import {useListItem, useUpdateListItem} from 'utils/list-items'
 import {formatDate} from 'utils/misc'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
-import {Textarea, ErrorMessage, Spinner} from 'components/lib'
+import {Spinner, Textarea, ErrorMessage} from 'components/lib'
 import {Rating} from 'components/rating'
 import {StatusButtons} from 'components/status-buttons'
 
@@ -126,7 +126,6 @@ function NotesTextarea({listItem, user}) {
         >
           Notes
         </label>
-        { isLoading && <Spinner /> }
         {isError ? (
           <ErrorMessage
             error={error}
@@ -134,6 +133,7 @@ function NotesTextarea({listItem, user}) {
             css={{marginLeft: 6, fontSize: '0.7em'}}
           />
         ) : null}
+        {isLoading ? <Spinner /> : null}
       </div>
       <Textarea
         id="notes"
