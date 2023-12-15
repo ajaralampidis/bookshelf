@@ -1,16 +1,13 @@
-import { createContext } from "react";
+import * as React from 'react'
 
+const AuthContext = React.createContext()
 
-export const AuthContext = createContext()
+function useAuth() {
+    const auth = React.useContext(AuthContext)
 
+    if (!auth) throw new Error('you are using AuthContext outside the provider')
 
-// const AuthContextProvider = ({children, value}) => {
-//     return (
-//         <AuthContext.Provider value={value} >
-//             {children}
-//         </AuthContext.Provider>
-//     )
-// }
+    return auth
+}
 
-// 🐨 create and export a React context variable for the AuthContext
-// 💰 using React.createContext
+export {AuthContext, useAuth}

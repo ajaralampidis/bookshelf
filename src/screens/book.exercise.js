@@ -15,12 +15,9 @@ import {Spinner, Textarea, ErrorMessage} from 'components/lib'
 import {Rating} from 'components/rating'
 import {StatusButtons} from 'components/status-buttons'
 
-// 💣 remove the user prop
 function BookScreen() {
   const {bookId} = useParams()
-  // 💣 remove the user argument
   const book = useBook(bookId)
-  // 💣 remove the user argument
   const listItem = useListItem(bookId)
 
   const {title, author, coverImageUrl, publisher, synopsis} = book
@@ -64,23 +61,11 @@ function BookScreen() {
                 minHeight: 100,
               }}
             >
-              {book.loadingBook ? null : (
-                <StatusButtons
-                  // 💣 remove the user prop here
-                  // user={user}
-                  book={book}
-                />
-              )}
+              {book.loadingBook ? null : <StatusButtons book={book} />}
             </div>
           </div>
           <div css={{marginTop: 10, height: 46}}>
-            {listItem?.finishDate ? (
-              <Rating
-                // 💣 remove the user prop here
-                // user={user}
-                listItem={listItem}
-              />
-            ) : null}
+            {listItem?.finishDate ? <Rating listItem={listItem} /> : null}
             {listItem ? <ListItemTimeframe listItem={listItem} /> : null}
           </div>
           <br />
@@ -88,11 +73,7 @@ function BookScreen() {
         </div>
       </div>
       {!book.loadingBook && listItem ? (
-        <NotesTextarea
-          // 💣 remove the user prop here
-          // user={user}
-          listItem={listItem}
-        />
+        <NotesTextarea listItem={listItem} />
       ) : null}
     </div>
   )
@@ -116,9 +97,7 @@ function ListItemTimeframe({listItem}) {
   )
 }
 
-// 💣 remove the user prop here
 function NotesTextarea({listItem}) {
-  // 💣 remove the user argument here
   const [mutate, {error, isError, isLoading}] = useUpdateListItem()
   const debouncedMutate = React.useMemo(() => debounceFn(mutate, {wait: 300}), [
     mutate,
