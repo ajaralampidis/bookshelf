@@ -17,15 +17,15 @@ function DiscoverBooksScreen({user}) {
     user,
   )
 
+  React.useEffect(() => {
+    return () => refetchBookSearchQuery(user)
+  }, [user])
+
   function handleSearchSubmit(event) {
     event.preventDefault()
     setQueried(true)
     setQuery(event.target.elements.search.value)
   }
-
-  React.useEffect(() => {
-    return () => refetchBookSearchQuery(user)
-  }, [user])
 
   return (
     <div>
