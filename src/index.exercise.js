@@ -1,20 +1,21 @@
-// 🐨 you don't need to do anything for the exercise, but there's an extra credit!
 import {loadDevTools} from './dev-tools/load'
 import './bootstrap'
 import * as React from 'react'
 import {createRoot} from 'react-dom/client'
 import {ReactQueryConfigProvider} from 'react-query'
+import {AuthProvider} from './context/auth-context'
 import {App} from './app'
-import { AuthProvider } from 'context/auth-context'
 
 const queryConfig = {
-  retry(failureCount, error) {
-    if (error.status === 404) return false
-    else if (failureCount < 2) return true
-    else return false
+  queries: {
+    useErrorBoundary: true,
+    refetchOnWindowFocus: false,
+    retry(failureCount, error) {
+      if (error.status === 404) return false
+      else if (failureCount < 2) return true
+      else return false
+    },
   },
-  useErrorBoundary: true,
-  refetchAllOnWindowFocus: false,
 }
 
 // ignore the rootRef in this file. I'm just doing it here to make
