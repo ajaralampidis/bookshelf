@@ -6,28 +6,47 @@ import * as auth from 'auth-provider'
 import {client} from 'utils/api-client'
 import {useAsync} from 'utils/hooks'
 import {FullPageSpinner, FullPageErrorFallback} from 'components/lib'
+import {queryCache} from 'react-query'
 
-async function getUser() {
+// async function getUser() {
+//   let user = null
+
+//   const token = await auth.getToken()
+//   if (token) {
+//     const data = await client('me', {token})
+//     user = data.user
+//   }
+
+//   return user
+// }
+
+async function getBootstrap() {
   let user = null
+  let listItems = null
 
   const token = await auth.getToken()
   if (token) {
-    const data = await client('me', {token})
+    const data = await client('bootstrap', {token})
     user = data.user
+    listItems = data.listItems
   }
 
-  return user
+  queryCache.setQueryData('list-items', listItems, {
+    staleTime: 5000
+  })
+  console.log("getbootstrap", user, listItems)
+  return {user, listItems}
 }
 
-const userPromise = getUser()
-
+// const userPromise = getUser()
+const bootstrapPormise = getBootstrap()
 
 const AuthContext = React.createContext()
 AuthContext.displayName = 'AuthContext'
 
 function AuthProvider(props) {
   const {
-    data: user,
+    data,
     error,
     isLoading,
     isIdle,
@@ -38,15 +57,10 @@ function AuthProvider(props) {
     status,
   } = useAsync()
 
+  const user = data?.user
+
   React.useEffect(() => {
-    // we need to call getUser() sooner.
-    // 🐨 move the next line to just outside the AuthProvider
-    // 🦉 this means that as soon as this module is imported,
-    // it will start requesting the user's data so we don't
-    // have to wait until the app mounts before we kick off
-    // the request.
-    // We're moving from "Fetch on render" to "Render WHILE you fetch"!
-    run(userPromise)
+    run(bootstrapPormise)
   }, [run])
 
   const login = React.useCallback(
