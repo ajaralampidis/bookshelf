@@ -14,6 +14,7 @@ import * as colors from 'styles/colors'
 import {Spinner, Textarea, ErrorMessage} from 'components/lib'
 import {Rating} from 'components/rating'
 import {StatusButtons} from 'components/status-buttons'
+import { Profiler } from 'components/profiler.exercise'
 
 function BookScreen() {
   const {bookId} = useParams()
@@ -23,6 +24,7 @@ function BookScreen() {
   const {title, author, coverImageUrl, publisher, synopsis} = book
 
   return (
+    <Profiler id="BookScreen" metadata={{bookId, listItemId: listItem?.id}} phases={["mount"]} >
     <div>
       <div
         css={{
@@ -76,6 +78,7 @@ function BookScreen() {
         <NotesTextarea listItem={listItem} />
       ) : null}
     </div>
+    </Profiler>
   )
 }
 
